@@ -1,0 +1,49 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.col-md-6 {
+	height: 800px;
+}
+
+.left {
+	background: red;
+	color: #fff;
+	cursor: pointer;
+}
+
+.right {
+	background: blue;
+	color: #fff;
+	cursor: pointer;
+}
+
+#rightNumber,
+#leftNumber {
+	width: 200px;
+	font-size: 100px;
+	line-height: 100px;
+	margin: 300px auto;
+}
+
+.game {
+	position: relative;
+}
+
+#timer {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	z-index: 9999;
+	color: #fff;
+	width: 45px;
+	font-size: 4em;
+	margin-left: -45px;
+	text-align: center;
+}
+
+.row span {
+	font-weight: 7em;
+	text-align: center;
+}
