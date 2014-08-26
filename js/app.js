@@ -81,7 +81,7 @@ gameApp.service('game', function(){
           function getScore(){
             var check = true;
             counter++;
-            myCounter.seconds = myCounter.options.seconds + 10;
+            myCounter.decrementCounter = myCounter.options.seconds + 10;
             setTimeout(function(){
               repopulate();
             }, 100);
@@ -91,6 +91,7 @@ gameApp.service('game', function(){
             var check = false;
             alert ('You lose! Your score is ' + counter);
             myCounter.stop();
+            return counter;
           };
 
            function getResult (a, b) {
@@ -133,17 +134,15 @@ gameApp.service('game', function(){
           var myCounter = new Countdown({  
               seconds: timer,  // number of seconds to count down
               onUpdateStatus: function(sec){ // callback for each second
-                timerEl.html(":" + sec);      
+                timerEl.html(":" + sec);
+                currentTimer = sec;     
               }, 
               onCounterEnd: function(){ alert('Time\'s up! Your score is ' + counter);}// final action
               
           });
 
         return {
-      startGame : function(){
-         
-
-     
+      startGame : function(){    
         
         //check clicks
 
