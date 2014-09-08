@@ -1,7 +1,7 @@
 var gameApp = angular.module('gameApp', ['ngRoute']);
 
 gameApp.config(function($routeProvider, $locationProvider, $provide) {
-    $locationProvider.hashPrefix('!');
+    //$locationProvider.hashPrefix('');
     $routeProvider
 
       // route for the home page
@@ -54,6 +54,9 @@ gameApp.service('game', function(){
         var numbers = {};
         var level = 1;
         var timer = 30;
+        var gameLevel = 1;
+
+    //get random number
 
     function random(min, max) {
           var min = min;
@@ -63,15 +66,48 @@ gameApp.service('game', function(){
           return rand; 
         };
 
+    // create new random numbers 
+    // check for difficulty level
     function populate() {
-          numbers.leftNum =  random(1,100);
-          leftNumber.html(numbers.leftNum);
-          numbers.rightNum =  random(1,100);
-          if (numbers.rightNum === numbers.leftNum){
-            numbers.rightNum =  random(1,100);
+        if (gameLevel == 1) {
+            populateFirstLevel();
           }
+
+        if (counter === 30) {
+          gameLevel = 2;
+          populateSecondLevel();
+        }
+    };
+
+      // first level
+
+      function populateFirstLevel(){
+        numbers.leftNum =  random(1,100);
+        leftNumber.html(numbers.leftNum);
+        numbers.rightNum =  random(1,100);
+        if (numbers.rightNum === numbers.leftNum){
+          numbers.rightNum =  random(1,100);
+        }
           rightNumber.html(numbers.rightNum);
-        };
+      };
+
+      //second level
+
+      function populateSecondLevel (argument) {
+        numbers.leftFirstNum =  random(1,100);
+        numbers.leftSecondNum =  random(1,100);
+
+        leftNumber.html(numbers.leftFirstNum + " - " + numbers.leftSecondNum);
+
+        numbers.leftNum =  numbers.leftFirstNum - numbers.leftSecondNum;
+
+        numbers.rightFirstNum =  random(1,100);
+        numbers.rightSecondNum =  random(1,100);
+
+        rightNumber.html(numbers.rightFirstNum + " - " + numbers.rightSecondNum);
+
+        numbers.rightNum =  numbers.rightFirstNum - numbers.rightSecondNum;
+      }
 
          function repopulate () {
             populate();
@@ -81,7 +117,7 @@ gameApp.service('game', function(){
           function getScore(){
             var check = true;
             counter++;
-            myCounter.decrementCounter = myCounter.options.seconds + 10;
+            myCounter.update();
             setTimeout(function(){
               repopulate();
             }, 100);
@@ -114,7 +150,7 @@ gameApp.service('game', function(){
               }
               if (seconds < 29){
                 // animation goes here!!!!
-                timerEl.animate({'transform': 'scale(1.3)'}, 300);
+                //timerEl.animate({'transform': 'scale(1.3)'}, 300);
               }
               seconds--;
             }
@@ -129,15 +165,20 @@ gameApp.service('game', function(){
             this.stop = function () {
               clearInterval(timer);
             };
+
+            this.update = function () {
+              seconds ++;
+            }
           }
 
           var myCounter = new Countdown({  
               seconds: timer,  // number of seconds to count down
               onUpdateStatus: function(sec){ // callback for each second
                 timerEl.html(":" + sec);
-                currentTimer = sec;     
               }, 
-              onCounterEnd: function(){ alert('Time\'s up! Your score is ' + counter);}// final action
+              onCounterEnd: function(){ 
+                console.log('Game Over');
+              }// final action
               
           });
 
