@@ -40,6 +40,8 @@ gameApp.controller('gameController', ['$scope', '$location', 'game', function($s
   };
     $scope.beginGame = game.startGame;
     $scope.beginGame();
+    
+
 }])
 
 gameApp.service('game', function(){
@@ -125,9 +127,10 @@ gameApp.service('game', function(){
 
           function gameLost(){
             var check = false;
-            alert ('You lose! Your score is ' + counter);
+            console.log ('You lose! Your score is ' + counter);
             myCounter.stop();
             return counter;
+            var defeat = true;
           };
 
            function getResult (a, b) {
@@ -167,7 +170,7 @@ gameApp.service('game', function(){
             };
 
             this.update = function () {
-              seconds ++;
+              seconds += 0.5;
             }
           }
 
@@ -218,6 +221,8 @@ gameApp.service('game', function(){
 
       myCounter.start();
       populate();
+
+      return defeat;
     }
   }
   
